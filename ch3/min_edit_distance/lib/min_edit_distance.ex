@@ -46,7 +46,9 @@ defmodule MinEditDistance do
     m = 0..len1 |> Enum.reduce(m, &Matrix.set(&2, &1, 0, &1))
     m = 0..len2 |> Enum.reduce(m, &Matrix.set(&2, 0, &1, &1))
 
-    indices = for i <- 1..len1, j <- 1..len2, do: {i, j}
+    range1 = if len1 > 0, do: 1..len1, else: []
+    range2 = if len2 > 0, do: 1..len2, else: []
+    indices = for i <- range1, j <- range2, do: {i, j}
 
     indices
     |> Enum.reduce(m, fn {i, j}, m ->
