@@ -11,12 +11,19 @@ defmodule MinEditDistance do
       %Matrix{row_size: row_size, col_size: col_size, entities: entities}
     end
 
-    def set(%Matrix{row_size: row_size, col_size: col_size, entities: entities} = matrix, row, col, value) when row < row_size do
+    def set(
+          %Matrix{row_size: row_size, col_size: col_size, entities: entities} = matrix,
+          row,
+          col,
+          value
+        )
+        when row < row_size do
       # IO.inspect [row, col, row * col_size + col, value, entities]
       %{matrix | entities: :array.set(row * col_size + col, value, entities)}
     end
 
-    def get(%Matrix{row_size: row_size, col_size: col_size, entities: entities}, row, col) when row < row_size do
+    def get(%Matrix{row_size: row_size, col_size: col_size, entities: entities}, row, col)
+        when row < row_size do
       :array.get(row * col_size + col, entities)
     end
 
@@ -51,5 +58,4 @@ defmodule MinEditDistance do
     end)
     |> Matrix.to_list()
   end
-
 end
