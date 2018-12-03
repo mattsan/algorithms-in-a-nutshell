@@ -2,6 +2,22 @@ defmodule MinEditDistanceTest do
   use ExUnit.Case
   doctest MinEditDistance
 
+  describe "blank" do
+    test "distance between blank and blank" do
+      assert MinEditDistance.min_edit_distance("", "") == [[0]]
+    end
+  end
+
+  describe "one side is an blank" do
+    test "distance between ABC and blank" do
+      assert MinEditDistance.min_edit_distance("ABC", "") == [[0], [1], [2], [3]]
+    end
+
+    test "distance between blank andd ABC" do
+      assert MinEditDistance.min_edit_distance("", "ABC") == [[0, 1, 2, 3]]
+    end
+  end
+
   describe "same length" do
     test "distance between ABC and ABC" do
       assert MinEditDistance.min_edit_distance("ABC", "ABC") == [
@@ -29,9 +45,29 @@ defmodule MinEditDistanceTest do
                [3, 2, 1, 2]
              ]
     end
+  end
 
-    test "distance between blank and blank" do
-      assert MinEditDistance.min_edit_distance("", "") == [[0]]
+  describe "general cases" do
+    test "distance between ABC and CDEF" do
+      assert MinEditDistance.min_edit_distance("ABC", "CDEF") == [
+               [0, 1, 2, 3, 4],
+               [1, 1, 2, 3, 4],
+               [2, 2, 2, 3, 4],
+               [3, 2, 3, 3, 4]
+             ]
+    end
+
+    test "distance between Phoenix and Elixir" do
+      assert MinEditDistance.min_edit_distance("Phoenix", "Elixir") == [
+               [0, 1, 2, 3, 4, 5, 6],
+               [1, 1, 2, 3, 4, 5, 6],
+               [2, 2, 2, 3, 4, 5, 6],
+               [3, 3, 3, 3, 4, 5, 6],
+               [4, 4, 4, 4, 4, 5, 6],
+               [5, 5, 5, 5, 5, 5, 6],
+               [6, 6, 6, 5, 6, 5, 6],
+               [7, 7, 7, 6, 5, 6, 6]
+             ]
     end
   end
 end
