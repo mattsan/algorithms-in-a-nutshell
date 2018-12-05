@@ -8,8 +8,17 @@ defmodule Sorts do
   defp insertion_sort(result, [], _), do: result
 
   defp insertion_sort(lhs, [value | rhs], cmp) do
-    {left, right} = Enum.split_while(lhs, &(cmp.(&1, value) <= 0))
-    insertion_sort(left ++ [value | right], rhs, cmp)
+    next_lhs =
+      case Enum.find_index(lhs, &(cmp.(&1, value) > 0)) do
+        nil ->
+          [value | Enum.reverse(lhs)]
+          |> Enum.reverse()
+
+        n ->
+          List.insert_at(lhs, n, value)
+      end
+
+    insertion_sort(next_lhs, rhs, cmp)
   end
 
   def stack_sort(source, cmp), do: stack_sort([], source, cmp)
