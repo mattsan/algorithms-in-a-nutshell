@@ -1,14 +1,13 @@
-#include <iostream>
-#include <algorithm>
-#include <iterator>
+#include "gtest/gtest.h"
 #include "heap_sort.h"
 
-int main(int, char* []) {
-    int array1[] = { 8, 11, 9, 2, 10, 16 };
-    heap_sort(array1, std::distance(std::begin(array1), std::end(array1)));
+TEST(HeapSort, sort_6_element_array) {
+    int actual[] = { 8, 11, 9, 2, 10, 16 };
+    int expected[] = { 2, 8, 9, 10, 11, 16 };
 
-    std::copy(std::begin(array1), std::end(array1), std::ostream_iterator<int>(std::cout, " "));
-    std::cout << std::endl;
+    heap_sort(actual, std::distance(std::begin(actual), std::end(actual)));
 
-    return 0;
+    for (auto pe = std::begin(expected), pa = std::begin(actual); pe < std::end(expected); ++pe, ++pa) {
+        ASSERT_EQ(*pe, *pa);
+    }
 }
