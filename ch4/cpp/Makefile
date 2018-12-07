@@ -1,4 +1,4 @@
-GTEST_DIR = ./googletest/googletest
+GTEST_DIR = ../../googletest/googletest
 CFLAGS = -std=c++11 -isystem $(GTEST_DIR)/include -pthread
 ENTRYPOINT = $(GTEST_DIR)/src/gtest_main.cc
 LIBS = libgtest.a
